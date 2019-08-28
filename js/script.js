@@ -1,7 +1,9 @@
 let serverURL;
 let serverPort;
+let url;
 let editing = false;
 
+// Get the JSON File
 $.ajax({
   url: 'config.json',
   type: 'GET',
@@ -9,6 +11,7 @@ $.ajax({
   success:function(keys){
     serverURL = keys['SERVER_URL'];
     serverPort = keys['SERVER_PORT'];
+    url = `${keys['SERVER_URL']}:${keys['SERVER_PORT']}`;
     getProductsData();
   },
   error: function(){
@@ -16,9 +19,11 @@ $.ajax({
   }
 });
 
+// Get all the products
 getProductsData = () => {
+    console.log(url);
     $.ajax({
-        url: `${serverURL}:${serverPort}/allProducts`,
+        url: `${url}/allProducts`,
         type: 'GET',
         dataType: 'json',
         success:function(data){
@@ -39,35 +44,12 @@ getProductsData = () => {
         },
         error: function(err){
             console.log(err);
-            console.log('something went wrong');
+            console.log('something went wrong with getting all the products');
         }
     })
 }
 
-$('#productList').on('click', '.editBtn', function() {
-    event.preventDefault();
-    const id = $(this).parent().parent().data('id');
-    $.ajax({
-        url: `${serverURL}:${serverPort}/product/${id}`,
-        type: 'get',
-        dataType: 'json',
-        success:function(product){
-            console.log(product);
-            $('#productName').val(product['name']);
-            $('#productPrice').val(product['price']);
-            $('#productID').val(product['_id']);
-            $('#addProductButton').text('Edit Product').addClass('btn-warning');
-            $('#heading').text('Edit Product');
-            editing = true;
-        },
-        error:function(err){
-            console.log(err);
-            console.log('something went wrong with getting the single product');
-        }
-    })
-
-});
-
+//Add or Edit a product
 $('#addProductButton').click(function(){
     event.preventDefault();
     let productName = $('#productName').val();
@@ -80,7 +62,7 @@ $('#addProductButton').click(function(){
         if(editing === true){
             const id = $('#productID').val();
             $.ajax({
-                url: `${serverURL}:${serverPort}/editProduct/${id}`,
+                url: `${url}/product/${id}`,
                 type: 'PATCH',
                 data: {
                     name: productName,
@@ -106,9 +88,8 @@ $('#addProductButton').click(function(){
                 }
             })
         } else {
-            console.log(`${productName} costs $${productPrice}`);
             $.ajax({
-                url: `${serverURL}:${serverPort}/product`,
+                url: `${url}/product`,
                 type: 'POST',
                 data: {
                     name: productName,
@@ -137,21 +118,38 @@ $('#addProductButton').click(function(){
     }
 })
 
+// Edit button to fill the form with exisiting product
+$('#productList').on('click', '.editBtn', function() {
+    event.preventDefault();
+    const id = $(this).parent().parent().data('id');
+    $.ajax({
+        url: `${url}/product/${id}`,
+        type: 'get',
+        dataType: 'json',
+        success:function(product){
+            $('#productName').val(product['name']);
+            $('#productPrice').val(product['price']);
+            $('#productID').val(product['_id']);
+            $('#addProductButton').text('Edit Product').addClass('btn-warning');
+            $('#heading').text('Edit Product');
+            editing = true;
+        },
+        error:function(err){
+            console.log(err);
+            console.log('something went wrong with getting the single product');
+        }
+    })
+});
+
+// Remove a product
 $('#productList').on('click', '.removeBtn', function(){
     event.preventDefault();
     const id = $(this).parent().parent().data('id');
     const li = $(this).parent().parent();
     $.ajax({
-      url: `${serverURL}:${serverPort}/products/${id}`,
+      url: `${url}/product/${id}`,
       type: 'DELETE',
       success:function(result){
-        console.log('you did it');
-        // const allProducts = $('.productItem');
-        // allProducts.each(function(){
-        //     if($(this).data('id') === id){
-        //         $(this).remove();
-        //     }
-        // });
         li.remove();
       },
       error:function(err) {
