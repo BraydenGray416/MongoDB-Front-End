@@ -22,6 +22,7 @@ $.ajax({
 // Get all the products
 getProductsData = () => {
     $.ajax({
+        // url: `${serverURL}:${serverPort}/allProducts`,
         url: `${url}/allProducts`,
         type: 'GET',
         dataType: 'json',
@@ -174,3 +175,47 @@ $('#registerTabBtn').click(function(){
     $('#registerForm').removeClass('d-none').show();
 
 });
+
+$('#registerForm').submit(function(){
+    event.preventDefault();
+    // console.log('register has been clicked');
+    const username = $('#rUsername').val();
+    const email = $('#rEmail').val();
+    const password = $('#rPassword').val();
+    const confirmPassword = $('#rConfirmPassword').val();
+    if(username.length === 0){
+        console.log('please enter a username');
+    } else if(email.length === 0){
+        console.log('please enter an email');
+    } else if(password.length === 0){
+        console.log('please enter a password');
+    } else if(confirmPassword.length === 0){
+        console.log('please confirm your password');
+    } else if(password !== confirmPassword){
+        console.log('your passwords do not match');
+    } else {
+        $.ajax({
+            url: `${url}/users`,
+            type: 'POST',
+            data: {
+                username: username,
+                email: email,
+                password: password
+            },
+            success:function(result){
+                console.log(result);
+            },
+            error:function(err){
+                console.log(err);
+                console.log('Something went wrong with registering a new user');
+            }
+        })
+    }
+});
+
+
+//We are using this so that our modal appears on load
+//We will turn this off when we are ready
+$(document).ready(function(){
+    $('#authForm').modal('show');
+})
