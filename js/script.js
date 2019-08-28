@@ -21,7 +21,6 @@ $.ajax({
 
 // Get all the products
 getProductsData = () => {
-    console.log(url);
     $.ajax({
         url: `${url}/allProducts`,
         type: 'GET',
@@ -157,4 +156,21 @@ $('#productList').on('click', '.removeBtn', function(){
         console.log('something went wrong deleting the product');
       }
     })
+});
+
+$('#loginTabBtn').click(function(){
+    event.preventDefault();
+    $('.nav-link').removeClass('active');
+    $(this).addClass('active');
+    $('#loginForm').show();
+    $('#registerForm').hide();
+});
+
+$('#registerTabBtn').click(function(){
+    event.preventDefault();
+    $('.nav-link').removeClass('active');
+    $(this).addClass('active');
+    $('#loginForm').hide();
+    $('#registerForm').removeClass('d-none').show();
+
 });

@@ -44,6 +44,12 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
+
+                <!-- Login & Register Button -->
+                <button type="button" class="btn btn-outline-light" data-toggle="modal" data-target="#authForm">
+                    Login / Register
+                </button>
             </div>
         </div>
     </header>
@@ -83,22 +89,71 @@
         </div>
         <div class="row">
             <div class="col">
-                <ul id="productList" class="list-group">
-                    <!-- <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Product 1
-                    <div>
-                    <button class="btn btn-info editBtn">Edit</button>
-                    <button class="btn btn-danger">Remove</button>
-                </div>
-            </li> -->
-                </ul>
+                <ul id="productList" class="list-group"></ul>
             </div>
         </div>
     </div>
 
-<script src="node_modules/jquery/dist/jquery.min.js" charset="utf-8"></script>
-<script src="node_modules/popper.js/dist/umd/popper.min.js" charset="utf-8"></script>
-<script src="node_modules/bootstrap/dist/js/bootstrap.min.js" charset="utf-8"></script>
-<script src="js/script.js" charset="utf-8"></script>
+    <!-- Modal -->
+    <div class="modal fade" id="authForm" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <ul class="nav nav-tabs nav-fill w-100">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="loginTabBtn">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="registerTabBtn">Register</a>
+                        </li>
+                    </ul>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm" autocomplete="false">
+                        <div class="form-group">
+                            <label for="lUsername">Username</label>
+                            <input type="text" name="lUsername" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="lPassword">Password</label>
+                            <input type="password" name="lPassword" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" name="button" class="btn btn-primary btn-block">Login</button>
+                        </div>
+                    </form>
+                    <form id="registerForm" autocomplete="false" class="d-none">
+                        <div class="form-group">
+                            <label for="rUsername">Username</label>
+                            <input type="text" name="rUsername" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="rEmail">Email</label>
+                            <input type="email" name="rEmail" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="rPassword">Password</label>
+                            <input type="password" name="rPassword" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="rConfirmPassword">Confirm Password</label>
+                            <input type="password" name="rConfirmPassword" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" name="button" class="btn btn-info btn-block">Register</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="node_modules/jquery/dist/jquery.min.js" charset="utf-8"></script>
+    <script src="node_modules/popper.js/dist/umd/popper.min.js" charset="utf-8"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js" charset="utf-8"></script>
+    <script src="js/script.js" charset="utf-8"></script>
 </body>
 </html>
